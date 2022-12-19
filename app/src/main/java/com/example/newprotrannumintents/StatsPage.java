@@ -6,9 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -17,6 +20,9 @@ public class StatsPage extends AppCompatActivity {
     EditText e1  ;
     int score;
 
+
+    List<String> items = new ArrayList<>();
+    ListView lv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +32,7 @@ public class StatsPage extends AppCompatActivity {
         score = i2.getIntExtra("MY_SCORE",5);
         scoreAsText = findViewById(R.id.etScore);
         e1 = findViewById(R.id.etName);
-
+lv = findViewById(R.id.listViewScores);
         scoreAsText.setText(String.valueOf(score));
 
 
@@ -56,7 +62,11 @@ public class StatsPage extends AppCompatActivity {
 
             String log = "Id: " + cn2.getID() + " ,Name: " + cn2.getName() + " ,Highscore: " +
                     cn2.getHighscore();
+
+            items.add(log);
             //if(cn2.getHighscore() >= )
+
+
             Log.i("Name: ", log);
         }
         topFiveFilter();
@@ -70,11 +80,13 @@ public class StatsPage extends AppCompatActivity {
         for (HighscoreClass cn2 : highscoreList) {
 
 
-            String log = "Id: " + cn2.getID() + " ,Name: " + cn2.getName() + " ,Highscore: " +
+            String log = "Id: " + cn2.getID() + "  Name: " + cn2.getName() + "  Highscore: " +
                     cn2.getHighscore();
 
             Log.i("Name: ", log);
         }
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
+        lv.setAdapter(adapter);
         //currently not working but displaying in log
 
 //        HighScoreArrayAdapter adapter = new HighScoreArrayAdapter(this, highscoreList);
